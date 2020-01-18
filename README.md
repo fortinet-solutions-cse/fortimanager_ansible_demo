@@ -1,4 +1,4 @@
-# Forti Manager Ansible demo
+# FortiManager Ansible demo
 
 The purpose of this project is to show a basic set of operations that can be done with Ansible modules for FortiManager.
 The modules uses httpapi plugin and hosts inventory
