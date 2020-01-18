@@ -1,0 +1,17 @@
+---
+- name: Add Static Routes
+  hosts: FortiManager
+  connection: httpapi
+  gather_facts: False
+
+  tasks:
+
+  - name: Modify Interface Access
+    fmgr_generic:
+      method: set
+      params:
+        - url: pm/config/device/FGT1/global/system/interface
+          data:
+            name: port1
+            allowaccess: [ "ping", "https", "http", "ftm", "fgfm"]
+

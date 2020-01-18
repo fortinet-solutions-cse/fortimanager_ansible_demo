@@ -1,0 +1,26 @@
+- name: CONFIG FW POLICIES
+  hosts: FortiManager
+  connection: httpapi
+  gather_facts: False
+
+  tasks:
+
+  - name: ADD VERY BASIC IPV4 POLICY WITH NO NAT (WIDE OPEN)
+    fmgr_fwpol_ipv4:
+      mode: "set"
+      adom: "myadom"
+      package_name: "Branch_Office"
+      name: "Basic_IPv4_Policy"
+      comments: "Created by Ansible"
+      action: "accept"
+      dstaddr: "all"
+      srcaddr: "all"
+      dstintf: "any"
+      srcintf: "any"
+      logtraffic: "utm"
+      service: "ALL"
+      schedule: "always"
+      utm_status: "enable"
+      profile_type: "single"
+      dnsfilter_profile: "default"
+      ips_sensor: "default"

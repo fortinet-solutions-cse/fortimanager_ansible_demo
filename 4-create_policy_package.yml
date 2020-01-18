@@ -1,0 +1,19 @@
+---
+- name: Create Policy Package
+  hosts: FortiManager
+  connection: httpapi
+  gather_facts: False
+
+  tasks:
+    - name: CREATE POLICY PACKAGE WITH TARGETS
+      fmgr_fwpol_package:
+        mode: "add"
+        adom: "myadom"
+        name: "Branch_Office"
+        object_type: "pkg"
+        inspection_mode: "flow"
+        ngfw_mode: "profile-based"
+        scope_members: "FGT1"
+
+
+          

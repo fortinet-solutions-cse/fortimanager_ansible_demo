@@ -1,0 +1,14 @@
+- name: Install Policy Packge in FMG
+  hosts: FortiManager
+  connection: httpapi
+  gather_facts: False
+
+  tasks:
+
+    - name: INSTALL PACKAGE
+      fmgr_fwpol_package:
+        mode: "set"
+        name: "Branch_Office"
+        scope_members: "FGT1"
+        object_type: install
+        adom: "myadom"

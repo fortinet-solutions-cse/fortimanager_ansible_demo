@@ -1,0 +1,22 @@
+---
+- name: CREATE AND EXECUTE SCRIPTS
+  hosts: FortiManager
+  connection: httpapi
+  gather_facts: False
+
+  tasks:
+    - name: CREATE ADOM
+      fmgr_generic:
+        method: 'add'
+        params:
+          - url: 'dvmdb/adom'
+            data:
+              - name: "myadom"
+              
+    - name: ENABLE ADOMs
+      fmgr_generic:
+        method: 'set'
+        params:
+          - url: '/cli/global/system/global'
+            data:
+              "adom-status": "enable"
