@@ -27,10 +27,12 @@ def playbook():
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     try:
-        fgt_id = request.args.get('number')
-        fgt_id = int(fgt_id)
+        playbook_id = int(request.args.get('number'))
 
-        response.data = _start_vm(fgt_id, auto_throughput=False)
+        with open(playbooks[playbook_id], 'r') as content_file:
+            content = content_file.read()
+
+        response.data = content
         return response
     except:
         response.data = traceback.format_exc()
