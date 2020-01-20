@@ -46,6 +46,7 @@
 
 	<script type="text/javascript">
 		window.onload = function () {
+
 			document.getElementById('login_cred').style.display = "block";
 			// Sets the default colorScheme to material
 			settings = new SSHyClient.settings();
@@ -53,8 +54,11 @@
 			// Apply fit addon
 			fit.apply(Terminal)
 
+			settings.setColorScheme(4)
+
 			// Build the default wsProxy URL for display on sidenav
 			buildWSProxyURL()
+
 
 			// Connect upon hitting Enter from the password field
 			document.getElementById("password").addEventListener("keyup", function (event) {
@@ -501,51 +505,49 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-6">
-
-				<h1>Ansible Demo Dashboard
-				</h1>
+				<br>
 
 				<div class="row">
+					<div class="col-sm-6" style="display: flex;align-items: center;">
+						<img src="Fortinet_Logo_Black-Red.png" alt="Fortinet" style="width:200px;">
+					</div>
 					<div class="col-sm-6">
-
-						<form>
-							<div class="form-group">
-								<label for="exampleFormControlInput1">Customer name</label>
-								<input type="email" class="form-control" id="customer_name"
-									placeholder="customer name">
-							</div>
-
-							<div class="form-group">
-								<label for="exampleFormControlInput1">Customer id</label>
-								<input type="email" class="form-control" id="customer_id"
-									placeholder="customer id">
-							</div>
-
-							<div class="form-group">
-								<label for="exampleFormControlSelect1">Plan</label>
-								<select class="form-control" id="customer_plan">
-									<option>Gold</option>
-									<option>Silver</option>
-									<option>Bronze</option>
-								</select>
-							</div>
-						</form>
+						<img src="ansible_logo.png" class="float-right" alt="Ansible" style="width:100px;">
 					</div>
 				</div>
-
-
-
 				<div class="row">
-
-					<div class="col-sm-4">
-						fwefw
+					<div class="col-sm-1">
 					</div>
-					<div class="col-sm-8">
-						wefsdf
+					<div class="col-sm-10">
+						<h1 class="text-center">FortiManager with Ansible
+						</h1>
 					</div>
-
+					<div class="col-sm-1">
+					</div>
 				</div>
-
+				<br>
+				<div class="row">
+					<div class="col-sm-12">
+						<button type="button" class="btn btn-primary" style="margin-bottom: 15px;">Create ADOM</button>
+						<button type="button" class="btn btn-primary" style="margin-bottom: 15px;">Add FortiGate
+							Device</button>
+						<button type="button" class="btn btn-primary" style="margin-bottom: 15px;">Modify Interface
+							Access</button>
+						<button type="button" class="btn btn-primary" style="margin-bottom: 15px;">Create Policy
+							Package</button>
+						<button type="button" class="btn btn-primary" style="margin-bottom: 15px;">Create Firewall
+							Policy</button>
+						<button type="button" class="btn btn-primary" style="margin-bottom: 15px;">Install Policy
+							Package</button>
+						<div class="form-group">
+							<label for="exampleFormControlTextarea1">Playbook preview</label>
+							<textarea class="form-control rounded-0" id="playbookPreview"
+								rows="15">Your playbook goes here!</textarea>
+						</div>
+						<button type="button" class="btn btn-danger float-right"
+							style="margin-bottom: 15px">Execute</button>
+					</div>
+				</div>
 			</div>
 			<div class="col-sm-6">
 				<div id="terminal"></div>
@@ -553,9 +555,6 @@
 
 		</div>
 	</div>
-
-
-
 </body>
 
 </html>
