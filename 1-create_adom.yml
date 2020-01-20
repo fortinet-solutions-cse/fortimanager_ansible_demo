@@ -1,11 +1,11 @@
 ---
-- name: CREATE AND EXECUTE SCRIPTS
+- name: Create and Enable ADOM
   hosts: FortiManager
   connection: httpapi
   gather_facts: False
 
   tasks:
-    - name: CREATE ADOM
+    - name: Create ADOM
       fmgr_generic:
         method: 'add'
         params:
@@ -13,7 +13,7 @@
             data:
               - name: "myadom"
               
-    - name: ENABLE ADOMs
+    - name: Enable ADOM
       fmgr_generic:
         method: 'set'
         params:

@@ -5,7 +5,7 @@
   gather_facts: False
 
   tasks:
-    - name: CREATE POLICY PACKAGE WITH TARGETS
+    - name: Create Policy Package
       fmgr_fwpol_package:
         mode: "add"
         adom: "myadom"

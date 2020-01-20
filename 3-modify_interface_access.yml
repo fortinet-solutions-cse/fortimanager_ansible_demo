@@ -1,5 +1,5 @@
 ---
-- name: Add Static Routes
+- name: Modify Interface Access
   hosts: FortiManager
   connection: httpapi
   gather_facts: False

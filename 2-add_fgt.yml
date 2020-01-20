@@ -6,7 +6,7 @@
 
   tasks:
 
-  - name: Add first FGT
+  - name: Add my FGT
     fmgr_device:
       adom: "myadom"
       device_ip: "192.168.122.40"
@@ -16,21 +16,3 @@
       device_serial: "FGVMULTM19000244"
       mode: "add"
       blind_add: "disable"
-
-  #- name: Add second FGT
-    #fmgr_generic:
-      #method: 'exec'
-      #params:
-        #- url: dvm/cmd/add/dev-list
-          #data:
-            #adom: root
-            #flags: ["create_task", "nonblocking"]
-            #add-dev-list:
-              #- adm_pass: fortinet
-                #adm_usr: admin
-                #ip: "192.168.122.40"
-                #name: "fgt-1"
-                #sn: "FGVMULTM19000244"
-                #"mgmt_mode": "fmgfaz"
-                #"flags": 24
-

@@ -5,7 +5,7 @@
 
   tasks:
 
-    - name: INSTALL PACKAGE
+    - name: Install Policy Package
       fmgr_fwpol_package:
         mode: "set"
         name: "Branch_Office"

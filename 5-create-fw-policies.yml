@@ -1,11 +1,11 @@
-- name: CONFIG FW POLICIES
+- name: Create FW Policy
   hosts: FortiManager
   connection: httpapi
   gather_facts: False
 
   tasks:
 
-  - name: ADD VERY BASIC IPV4 POLICY WITH NO NAT (WIDE OPEN)
+  - name: Add Basic IPv4 Policy
     fmgr_fwpol_ipv4:
       mode: "set"
       adom: "myadom"
