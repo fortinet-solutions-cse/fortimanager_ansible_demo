@@ -3,7 +3,6 @@ from flask import Flask, Response, request, jsonify
 from json import loads, dumps
 from functools import reduce
 import traceback
-import html2text
 
 import urllib3
 
