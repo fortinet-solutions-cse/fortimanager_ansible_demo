@@ -17,6 +17,7 @@
 #
 
 from __future__ import (absolute_import, division, print_function)
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -26,11 +27,10 @@ author:
     - Andrew Welsh (@Ghilli3)
     - Jim Huber (@p4r4n0y1ng)
 httpapi : fortimanager
-short_description: HttpApi Plugin for Fortinet FortiManager Appliance or VM
+short_description: HttpApi Plugin for Fortinet FortiManager Appliance or VM.
 description:
-  - This HttpApi plugin provides methods to connect to Fortinet FortiManager Appliance or VM via JSON RPC API
-version_added: "2.8"
-
+  - This HttpApi plugin provides methods to connect to Fortinet FortiManager Appliance or VM via JSON RPC API.
+version_added: "2.9"
 """
 
 import json
@@ -82,6 +82,7 @@ class HttpApi(HttpApiBase):
         return None
 
     def login(self, username, password):
+
         """
         This function will log the plugin into FortiManager, and return the results.
         :param username: Username of FortiManager Admin
@@ -91,7 +92,7 @@ class HttpApi(HttpApiBase):
         """
         self._logged_in_user = username
         self.send_request(FMGRMethods.EXEC, self._tools.format_request(FMGRMethods.EXEC, "sys/login/user",
-                                                                       passwd=password, user=username,))
+                                                                       passwd=password, user=username, ))
 
         if "FortiManager object connected to FortiManager" in self.__str__():
             # If Login worked, then inspect the FortiManager for Workspace Mode, and it's system information.
@@ -138,7 +139,7 @@ class HttpApi(HttpApiBase):
 
     def send_request(self, method, params):
         """
-        Responsible for actual sending of data to the connection httpapi base plugin. Does some formatting as well.
+        Responsible for actual sending of data to the connection httpapi base plugin. Does some formatting too.
         :param params: A formatted dictionary that was returned by self.common_datagram_params()
         before being called here.
         :param method: The preferred API Request method (GET, ADD, POST, etc....)
@@ -146,16 +147,22 @@ class HttpApi(HttpApiBase):
 
         :return: Dictionary of status, if it logged in or not.
         """
-
         try:
             if self.sid is None and params[0]["url"] != "sys/login/user":
-                raise FMGBaseException("An attempt was made to login with the SID None and URL != login url.")
+                # If not connected, send connection request.
+                if not self.connection._connected:
+                    try:
+                        self.connection._connect()
+                    except BaseException as err:
+                        raise FMGBaseException(
+                            msg="An problem happened with the httpapi plugin self-init connection process. "
+                                "Error: " + str(err))
         except IndexError:
             raise FMGBaseException("An attempt was made at communicating with a FMG with "
                                    "no valid session and an incorrectly formatted request.")
-        except Exception:
+        except Exception as err:
             raise FMGBaseException("An attempt was made at communicating with a FMG with "
-                                   "no valid session and an unexpected error was discovered.")
+                                   "no valid session and an unexpected error was discovered. \n Error: " + str(err))
 
         self._update_request_id()
         json_request = {
@@ -386,7 +393,7 @@ class HttpApi(HttpApiBase):
             try:
                 if resp_obj[1]["status"]["message"] == "OK":
                     self._lock_info = None
-            except:
+            except BaseException:
                 self._lock_info = resp_obj[1]
         return resp_obj
 
@@ -404,7 +411,7 @@ class HttpApi(HttpApiBase):
                 self._module.fail_json(msg=("An error occurred trying to get the ADOM Info. Error: " + str(resp_obj)))
             elif code == 0:
                 num_of_adoms = len(resp_obj[1])
-                append_list = ['root',]
+                append_list = ['root', ]
                 for adom in resp_obj[1]:
                     if adom["tab_status"] != "":
                         append_list.append(str(adom["name"]))
@@ -423,7 +430,7 @@ class HttpApi(HttpApiBase):
                 try:
                     if adom_lock_info[1]["status"]["message"] == "OK":
                         continue
-                except:
+                except BaseException:
                     pass
                 try:
                     if adom_lock_info[1][0]["lock_user"]:
@@ -439,8 +446,6 @@ class HttpApi(HttpApiBase):
             raise FMGBaseException(msg=("An error occurred while trying to get the locked adom list. Error: "
                                         + str(err)))
 
-
     ################################
     # END DATABASE LOCK CONTEXT CODE
     ################################
-
