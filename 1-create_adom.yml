@@ -12,6 +12,7 @@
           - url: 'dvmdb/adom'
             data:
               - name: "myadom"
+                mr: 2
               
     - name: Enable ADOM
       fmgr_generic:

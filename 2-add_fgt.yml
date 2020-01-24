@@ -9,7 +9,7 @@
   - name: Add my FGT
     fmgr_device:
       adom: "myadom"
-      device_ip: "192.168.122.40"
+      device_ip: "192.168.244.101"
       device_username: "admin"
       device_password: "fortinet"
       device_unique_name: "FGT1"
