@@ -1,0 +1,56 @@
+- name: Delete all FGT config
+  hosts: FortiGate
+  connection: httpapi
+  gather_facts: False
+  ignore_errors: yes
+  
+  tasks:
+    - name: Delete Policy Package
+      fortios_firewall_policy:
+        state: "absent"
+        firewall_policy:
+           policyid: 1
+ 
+
+- name: Delete all FMG config
+  hosts: FortiManager
+  connection: httpapi
+  gather_facts: False
+  ignore_errors: yes
+  
+  tasks:
+    - name: Delete Policy Package
+      fmgr_fwpol_package:
+        mode: "delete"
+        adom: "myadom"
+        name: "Branch_Office"
+        object_type: "pkg"
+        inspection_mode: "flow"
+        ngfw_mode: "profile-based"
+        scope_members: "FGT1"
+ 
+    - name: Remove my FGT
+      fmgr_device:
+         adom: "myadom"
+         device_ip: "192.168.244.101"
+         device_username: "admin"
+         device_password: "fortinet"
+         device_unique_name: "FGT1"
+         device_serial: "FGVMULTM19003508"
+         mode: "delete"
+         blind_add: "disable"
+
+    - name: Delete ADOM
+      fmgr_generic:
+        method: 'delete'
+        params:
+          - url: 'dvmdb/adom/myadom'
+              
+    - name: Disable ADOM
+      fmgr_generic:
+        method: 'set'
+        params:
+          - url: '/cli/global/system/global'
+            data:
+              "adom-status": "disable"
+

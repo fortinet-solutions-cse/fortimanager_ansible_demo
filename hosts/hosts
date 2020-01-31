@@ -16,4 +16,19 @@ ansible_httpapi_timeout=300
 ansible_python_interpreter=/usr/bin/python3
 
 
+[FortiGate]
+192.168.244.101 ansible_host=192.168.244.101
 
+[fgt_api:children]
+FortiGate
+
+[fgt_api:vars]
+ansible_user=admin
+ansible_password=fortinet
+ansible_network_os=fortios
+ansible_become=no
+ansible_become_method=disable
+ansible_httpapi_use_ssl=true
+ansible_httpapi_validate_certs=False
+ansible_httpapi_timeout=300
+ansible_python_interpreter=/usr/bin/python3
