@@ -12,7 +12,7 @@
 
 
     <script type="text/javascript">
-        var wsproxyURL = "10.210.9.135"
+        var wsproxyURL = "35.204.236.88"
         var wsproxyPorts = { "ws": 5999, "wss": 6001 }
         var wsproxyProto = "ws"
 
@@ -200,9 +200,9 @@
         // Starts the SSH client in scripts/transport.js
         function startSSHy() {
 
-            var html_ipaddress = "10.210.9.135"
-            var termUsername = "magonzalez"
-            var termPassword = "m"
+            var html_ipaddress = "35.204.236.88:10100"
+            var termUsername = "fortinet"
+            var termPassword = "fortinet"
 
             // find the port number
             if (html_ipaddress.includes(':')) {
@@ -402,28 +402,28 @@
         var last_playbook_selected = ''
 
         var create_adom_playbook = `- name: Create and Enable ADOM
-    hosts: FortiManager
-    connection: httpapi
-    gather_facts: False
+  hosts: FortiManager
+  connection: httpapi
+  gather_facts: False
 
-    tasks:
+  tasks:
     - name: Create ADOM
-        fmgr_generic:
+      fmgr_generic:
         method: 'add'
         params:
-            - url: 'dvmdb/adom'
+          - url: 'dvmdb/adom'
             data:
-                - name: "myadom"
+              - name: "myadom"
                 mr: 2
-                
+              
     - name: Enable ADOM
-        fmgr_generic:
+      fmgr_generic:
         method: 'set'
         params:
-            - url: '/cli/global/system/global'
+          - url: '/cli/global/system/global'
             data:
-                "adom-status": "enable"
-`
+              "adom-status": "enable"`
+
         var add_fgt_playbook = `- name: Add FGTs to FortiManager
   hosts: FortiManager
   connection: httpapi
@@ -434,11 +434,11 @@
   - name: Add my FGT
     fmgr_device:
       adom: "myadom"
-      device_ip: "192.168.122.40"
+      device_ip: "192.168.244.101"
       device_username: "admin"
       device_password: "fortinet"
       device_unique_name: "FGT1"
-      device_serial: "FGVMULTM19000244"
+      device_serial: "FGVMULTM19003508"
       mode: "add"
       blind_add: "disable"
 `
@@ -475,46 +475,46 @@
         scope_members: "FGT1"
 `
         var create_fw_policy_playbook = `- name: Create FW Policy
-hosts: FortiManager
-connection: httpapi
-gather_facts: False
+  hosts: FortiManager
+  connection: httpapi
+  gather_facts: False
 
-tasks:
+  tasks:
 
-- name: Add Basic IPv4 Policy
-  fmgr_fwpol_ipv4:
-    mode: "set"
-    adom: "myadom"
-    package_name: "Branch_Office"
-    name: "Basic_IPv4_Policy"
-    comments: "Created by Ansible"
-    action: "accept"
-    dstaddr: "all"
-    srcaddr: "all"
-    dstintf: "any"
-    srcintf: "any"
-    logtraffic: "utm"
-    service: "ALL"
-    schedule: "always"
-    utm_status: "enable"
-    profile_type: "single"
-    dnsfilter_profile: "default"
-    ips_sensor: "default"
+  - name: Add Basic IPv4 Policy
+    fmgr_fwpol_ipv4:
+      mode: "set"
+      adom: "myadom"
+      package_name: "Branch_Office"
+      name: "Basic_IPv4_Policy"
+      comments: "Created by Ansible"
+      action: "accept"
+      dstaddr: "all"
+      srcaddr: "all"
+      dstintf: "any"
+      srcintf: "any"
+      logtraffic: "utm"
+      service: "ALL"
+      schedule: "always"
+      utm_status: "enable"
+      profile_type: "single"
+      dnsfilter_profile: "default"
+      ips_sensor: "default"
 `
         var install_policy_package_playbook = `- name: Install Policy Packge in FMG
-hosts: FortiManager
-connection: httpapi
-gather_facts: False
+  hosts: FortiManager
+  connection: httpapi
+  gather_facts: False
 
-tasks:
+  tasks:
 
-  - name: Install Policy Package
-    fmgr_fwpol_package:
-      mode: "set"
-      name: "Branch_Office"
-      scope_members: "FGT1"
-      object_type: install
-      adom: "myadom"
+    - name: Install Policy Package
+      fmgr_fwpol_package:
+        mode: "set"
+        name: "Branch_Office"
+        scope_members: "FGT1"
+        object_type: install
+        adom: "myadom"
 `
 
         function create_adom() {
@@ -547,6 +547,13 @@ tasks:
             command = "cd /fortipoc/fortimanager_ansible_demo/\n"
             transport.expect_key(command)
             command = "ansible-playbook -i hosts " + last_playbook_selected + "\n";
+            transport.expect_key(command)
+        }
+
+        function reset() {
+            command = "cd /fortipoc/fortimanager_ansible_demo/\n"
+            transport.expect_key(command)
+            command = "ansible-playbook -i hosts 8-delete.yml\n";
             transport.expect_key(command)
         }
 
@@ -625,17 +632,17 @@ tasks:
                 <table style="width: 100%">
                     <tr>
                         <td><span class="icon-address-book"></span> IP Address:</td>
-                        <td><input type="text" id="ipaddress" placeholder="10.210.9.135" style="width: 90%"
+                        <td><input type="text" id="ipaddress" placeholder="35.204.236.88:10100" style="width: 90%"
                                 onblur="validate(this.id, this.value)" autofocus></td>
                     </tr>
                     <tr>
                         <td><span class="icon-user-circle-o"></span> Username:</td>
-                        <td><input type="text" id="username" placeholder="magonzalez" style="width: 90%"
+                        <td><input type="text" id="username" placeholder="fortinet" style="width: 90%"
                                 onblur="validate(this.id, this.value)"></td>
                     </tr>
                     <tr>
                         <td><span class="icon-eye"></span> Password:</td>
-                        <td><input type="password" id="password" placeholder="m" style="width: 90%"
+                        <td><input type="password" id="password" placeholder="fortinet" style="width: 90%"
                                 onblur="validate(this.id, this.value)"></td>
                     </tr>
                 </table>
@@ -701,6 +708,8 @@ tasks:
                             <textarea class="form-control rounded-0" id="playbookPreview"
                                 rows="20">Your playbook goes here!</textarea>
                         </div>
+                        <button type="button" class="btn btn-warning float-left" style="margin-bottom: 15px"
+                            onclick="reset()">Reset</button>
                         <button type="button" class="btn btn-danger float-right" style="margin-bottom: 15px"
                             onclick="execute()">Execute</button>
                     </div>
