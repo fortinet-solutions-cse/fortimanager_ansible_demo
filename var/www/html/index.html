@@ -414,6 +414,7 @@
             - url: 'dvmdb/adom'
             data:
                 - name: "myadom"
+                mr: 2
                 
     - name: Enable ADOM
         fmgr_generic:
@@ -456,7 +457,6 @@
           data:
             name: port1
             allowaccess: [ "ping", "https", "http", "ftm", "fgfm"]
-
 `
         var create_policy_package_playbook = `- name: Create Policy Package
   hosts: FortiManager
@@ -527,7 +527,7 @@ tasks:
         };
         function modify_interface_access() {
             playbookPreview.value = modify_interface_access_playbook;
-            last_playbook_selected = "3-modfiy_interface_access.yml";
+            last_playbook_selected = "3-modify_interface_access.yml";
         };
         function create_policy_package() {
             playbookPreview.value = create_policy_package_playbook;
@@ -535,7 +535,7 @@ tasks:
         };
         function create_firewall_policy() {
             playbookPreview.value = create_fw_policy_playbook;
-            last_playbook_selected = "5-create_fw_policy.yml";
+            last_playbook_selected = "5-create_fw_policies.yml";
         };
         function install_policy_package() {
             playbookPreview.value = install_policy_package_playbook;
@@ -544,6 +544,8 @@ tasks:
 
 
         function execute() {
+            command = "cd /fortipoc/fortimanager_ansible_demo/\n"
+            transport.expect_key(command)
             command = "ansible-playbook -i hosts " + last_playbook_selected + "\n";
             transport.expect_key(command)
         }
